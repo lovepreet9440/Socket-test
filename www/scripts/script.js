@@ -18,7 +18,31 @@ socket.on("loginSuccess", function () {
 });
 
 socket.on("newMsg", function (user, msg) {
-  _displayNewMsg(user, msg);
+  displayNewMsg(user, msg);
+});
+
+socket.on("system", function (userName, userArr, type) {
+  switch (type) {
+    case "logout": {
+      const userLeft = `
+        <hr><p class="userleft">${userName} has left the chat</p><hr>
+        `;
+      break;
+    }
+    case "login": {
+      const userjoin = `
+        <hr><p class="userleft">${userName} has join the chat</p><hr>
+        `;
+      break;
+    }
+  }
+
+  document.querySelector(".inbox_chat").innerHTML = "";
+  userArr.forEach((user) => refreshPeopleList(user));
+  // var msg = nickName + (type == "login" ? " joined" : " left");
+  // that._displayNewMsg("system ", msg, "red");
+  // document.getElementById("status").textContent =
+  //   userCount + (userCount > 1 ? " users" : " user") + " online";
 });
 
 // EVENT LISTENERS
@@ -31,7 +55,7 @@ document.getElementById("msg_send_btn").addEventListener(
     messageInput.focus();
     if (msg.trim().length != 0) {
       socket.emit("postMsg", msg);
-      _displayNewMsg("me", msg);
+      displayNewMsg("me", msg);
       return;
     }
   },
@@ -52,26 +76,9 @@ document.getElementById("loginBtn").addEventListener(
   false
 );
 
-// document.getElementById("write_msg").addEventListener(
-//   "keyup",
-//   function (e) {
-//     var messageInput = document.getElementById("messageInput"),
-//       msg = messageInput.value,
-//       color = document.getElementById("colorStyle").value;
-//     if (e.keyCode == 13 && msg.trim().length != 0) {
-//       messageInput.value = "";
-//       socket.emit("postMsg", msg, color);
-//       _displayNewMsg("me", msg, color);
-//     }
-//   },
-//   false
-// );
-
-/*   FUNCTIONS   */
-
-function _displayNewMsg(user, msg, color) {
+// FUNCTIONS
+function displayNewMsg(user, msg) {
   var container = document.querySelector("#historyMsg");
-  //   msgToDisplay = document.createElement("p"),
 
   var today = new Date();
   var time = today.toTimeString().substr(0, 5);
@@ -93,14 +100,12 @@ function _displayNewMsg(user, msg, color) {
 
   user == "me"
     ? (msgToDisplay = `
-
   <div class="outgoing_msg">
     <div class="sent_msg">
       <p>${msg}</p>
       <span class="time_date"> ${time} | ${date}</span>
     </div>
   </div>
-
   `)
     : (msgToDisplay = `
   <div class="incoming_msg">
@@ -116,25 +121,45 @@ function _displayNewMsg(user, msg, color) {
   </div>
   `);
 
-  // `
-  //   <div class="incoming_msg">
-  //     <div class="incoming_msg_img">
-  //       <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" />
-  //     </div>
-  //     <div class="received_msg">
-  //       <div class="received_withd_msg">
-  //         <p>Test which is a new approach to have all solutions</p>
-  //         <span class="time_date"> 11:01 AM | June 9</span>
-  //       </div>
-  //     </div>
-  //   </div>
-  //   `;
-  // msgToDisplay.style.color = color || "#000";
-  // msgToDisplay.innerHTML =
-  //   user + '<span class="timespan">(' + date + "): </span>" + msg;
-
-  console.log(msgToDisplay);
-
   container.insertAdjacentHTML("beforeend", msgToDisplay);
   container.scrollTop = container.scrollHeight;
+}
+
+function refreshPeopleList(user) {
+  var peopleContainer = document.querySelector(".inbox_chat");
+
+  var today = new Date();
+  var dd = today.getDate();
+
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+  var date = mm + "/" + dd + "/" + yyyy;
+
+  const peopleElement = `
+  <div class="chat_list">
+    <div class="chat_people">
+      <div class="chat_img">
+        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" />
+      </div>
+      <div class="chat_ib">
+        <h5>${user}<span class="chat_date">${date}</span></h5>
+        <p>
+          Test, which is a new approach to have all solutions
+          astrology under one roof.
+        </p>
+      </div>
+    </div>
+  </div>
+  `;
+
+  peopleContainer.insertAdjacentHTML("beforeend", peopleElement);
+  peopleContainer.scrollTop = peopleContainer.scrollHeight;
 }

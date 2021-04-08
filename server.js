@@ -1,5 +1,6 @@
 var express = require("express"),
   app = express(),
+  moment = require("moment"),
   server = require("http").createServer(app),
   io = require("socket.io").listen(server),
   users = [];
@@ -21,7 +22,9 @@ io.sockets.on("connection", function (socket) {
       socket.nickname = nickname;
       users.push(nickname);
       socket.emit("loginSuccess");
-      io.sockets.emit("system", nickname, users.length, "login");
+      console.log(users);
+      // const date = moment(Date.now()).format("MM-DD");
+      io.sockets.emit("system", nickname, users, "login");
     }
   });
   //user leaves
@@ -29,7 +32,7 @@ io.sockets.on("connection", function (socket) {
     if (socket.nickname != null) {
       //users.splice(socket.userIndex, 1);
       users.splice(users.indexOf(socket.nickname), 1);
-      socket.broadcast.emit("system", socket.nickname, users.length, "logout");
+      socket.broadcast.emit("system", socket.nickname, users, "logout");
     }
   });
   //new message get

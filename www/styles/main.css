@@ -238,6 +238,11 @@ body {
   background: #e8f6ff;
 }
 
+.userleft {
+  text-align: center;
+  color: grey;
+}
+
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
