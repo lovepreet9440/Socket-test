@@ -1,7 +1,7 @@
 var socket = io.connect();
 
 socket.on("connect", function () {
-  document.getElementById("info").textContent = "get yourself a nickname :)";
+  document.getElementById("info").textContent = "Please enter your name";
   document.getElementById("nickWrapper").style.display = "block";
   document.getElementById("nicknameInput").focus();
 });
@@ -12,7 +12,7 @@ socket.on("nameExisted", function () {
 });
 
 socket.on("loginSuccess", function () {
-  document.title = "hichat | " + document.getElementById("nicknameInput").value;
+  document.title = "Zimo | " + document.getElementById("nicknameInput").value;
   document.getElementById("loginWrapper").style.display = "none";
   document.getElementById("write_msg").focus();
 });
@@ -71,7 +71,6 @@ document.getElementById("loginBtn").addEventListener(
 
 function _displayNewMsg(user, msg, color) {
   var container = document.querySelector("#historyMsg");
-  // ,
   //   msgToDisplay = document.createElement("p"),
 
   var today = new Date();
@@ -130,9 +129,6 @@ function _displayNewMsg(user, msg, color) {
   //     </div>
   //   </div>
   //   `;
-
-  //determine whether the msg contains emoji
-  // msg = this._showEmoji(msg);
   // msgToDisplay.style.color = color || "#000";
   // msgToDisplay.innerHTML =
   //   user + '<span class="timespan">(' + date + "): </span>" + msg;
