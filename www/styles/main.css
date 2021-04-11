@@ -11,18 +11,6 @@ body {
   margin: 0 auto;
   background-color: #ddd;
 }
-#loginWrapper {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(5, 5, 5, 0.6);
-  text-align: center;
-  color: #fff;
-  display: block;
-  padding-top: 200px;
-}
 #nickWrapper {
   display: none;
 }
@@ -312,7 +300,7 @@ body {
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
-  width: 100%;
+  width: 90%;
   outline: none;
 }
 
@@ -321,7 +309,8 @@ body {
   position: relative;
 }
 
-.msg_send_btn {
+.msg_send_btn,
+.file_btn {
   background: #05728f none repeat scroll 0 0;
   border: none;
   border-radius: 50%;
@@ -329,7 +318,6 @@ body {
   cursor: pointer;
   font-size: 15px;
   height: 33px;
-  position: absolute;
   right: 0;
   top: 11px;
   width: 33px;

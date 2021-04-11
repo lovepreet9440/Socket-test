@@ -13,8 +13,9 @@ server.listen(process.env.PORT || 4000);
 console.log(`Server started on port ${process.env.PORT || 4000}`);
 
 io.sockets.on("connection", function (socket) {
+  // console.log("socket.id", socket.id);
   //new user login
-  socket.on("login", function (nickname) {
+  socket.on("login", function (nickname, roomName) {
     if (users.indexOf(nickname) > -1) {
       socket.emit("nameExisted");
     } else {
@@ -22,7 +23,6 @@ io.sockets.on("connection", function (socket) {
       socket.nickname = nickname;
       users.push(nickname);
       socket.emit("loginSuccess");
-      console.log(users);
       // const date = moment(Date.now()).format("MM-DD");
       io.sockets.emit("system", nickname, users, "login");
     }
@@ -40,7 +40,12 @@ io.sockets.on("connection", function (socket) {
     socket.broadcast.emit("newMsg", socket.nickname, msg);
   });
   //new image get
-  // socket.on("img", function (imgData, color) {
-  //   socket.broadcast.emit("newImg", socket.nickname, imgData, color);
-  // });
+  socket.on("img", function (imgData, color) {
+    socket.broadcast.emit("newImg", socket.nickname, imgData, color);
+  });
+  // rooms
+  socket.on("createRoom", function (roomName, nickName) {
+    console.log("room " + roomName + "Created by " + nickName);
+    socket.join(roomName);
+  });
 });

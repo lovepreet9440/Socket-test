@@ -19,7 +19,7 @@
       <div class="inbox_people">
         <div class="headind_srch">
           <div class="recent_heading">
-            <h4>Recent</h4>
+            <h4>ROOM NAME</h4>
           </div>
           <div class="srch_bar">
             <div class="stylish-input-group">
@@ -82,8 +82,9 @@
           <div class="input_msg_write">
             <input id="write_msg" type="text" class="write_msg" placeholder="Type a message" />
             <button id="msg_send_btn" class="msg_send_btn" type="button">
-              <i class="fa fa-file-image" aria-hidden="true"></i>
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
             </button>
+            <!-- <input type="file" id="imageInput" value="Image" /> -->
           </div>
         </div>
       </div>
@@ -113,8 +114,29 @@
   <div id="loginWrapper">
     <p id="info">connecting to server...</p>
     <div id="nickWrapper">
+
+
+      <!-- NAME INPUT -->
       <input type="text" placeholder="nickname" id="nicknameInput" style="color: black;" />
+
+
+
+      <!-- ROOM NAME INPUT -->
+      <input type="text" placeholder="room name" id="roomNameInput" style="color: black;" />
+
+      <!-- SPECIFY CREATING A ROOM OR JOINING A ROOM -->
+      <input type="radio" id="create" name="room" value="create">
+      <label for="create">Create new room</label><br>
+      <input type="radio" id="join" name="room" value="join">
+      <label for="join">Join Room</label><br>
+
       <input type="button" value="OK" id="loginBtn" />
+
+      <!-- 
+      <input type="radio" id="male" name="room" value="male">
+      <label for="male">Male</label><br>
+      <input type="radio" id="female" name="room" value="female"> -->
+
     </div>
   </div>
   <script src="/socket.io/socket.io.js"></script>
